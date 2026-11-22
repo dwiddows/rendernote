@@ -83,10 +83,11 @@ The page is also a backing track for recording yourself, one part at a time.
 2. Listen through a wired earpiece in one ear.
    The backing stays out of the recording, you can still hear yourself, and there's no Bluetooth delay.
 3. Record yourself, on video or just audio, with another device.
-   Keep the click on, and turn your own part down if it helps.
+   Keep the click on, and turn your own part up so you can play along with it.
 4. Play the piece through several times in one recording.
    The more takes, the more there is to choose from.
 5. Do the same for each part.
-6. Give the recordings and the score to an agent such as Claude Code, and ask it to pick the best of each take, line the parts up and mix them into one video.
+6. Give the recordings and the score to an agent such as Claude Code, and ask it to pick the best of each take and mix them into one video.
+   It can check every take for split notes and line the parts up bar by bar.
 
 The Moon River trombone quartet video was made this way.

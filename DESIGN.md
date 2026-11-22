@@ -74,3 +74,19 @@ The parts are Part 1 and Part 2, for any two instruments; playback uses violin.
 Code: MIT.
 The Scarborough Fair arrangement: CC BY 4.0, credited in the score.
 MuseScore General: MIT, with its contributors' notices carried in every page that uses it.
+
+## Recording with it
+
+The page is also a backing track for recording yourself, one part at a time.
+
+1. Open the page on a phone or tablet and choose your part.
+2. Listen through a wired earpiece in one ear.
+   The backing stays out of the recording, you can still hear yourself, and there's no Bluetooth delay.
+3. Record yourself, on video or just audio, with another device.
+   Keep the click on, and turn your own part down if it helps.
+4. Play the piece through several times in one recording.
+   The more takes, the more there is to choose from.
+5. Do the same for each part.
+6. Give the recordings and the score to an agent such as Claude Code, and ask it to pick the best of each take, line the parts up and mix them into one video.
+
+The Moon River trombone quartet video was made this way.

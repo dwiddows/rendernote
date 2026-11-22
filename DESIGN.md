@@ -59,7 +59,8 @@ and so on) are written alongside only on request.
 - Tempo slider; volume, mute and solo for each part; click volume, on
   every beat or only the downbeat, and count-in length; loop between two
   bars.
-- The click and count-in are made by the page, not baked into the MIDI.
+- The page makes the click and count-in itself, so they follow the tempo
+  and settings.
 - Settings are remembered by each browser and can be put in the link
   (`#view=Part 1&tempo=80`), so one setup can be shared.
 - The build date (and git commit, if the score is in git) shows at the

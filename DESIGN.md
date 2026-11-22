@@ -41,7 +41,9 @@ ship with LilyPond. MuseScore users export MusicXML first.
 - the full score and each part, engraved by LilyPond as SVG
 - the MIDI, one track per part
 - the full score and part PDFs, as download buttons
-- the sounds for the instruments used, from MuseScore General
+- the sounds for the instruments used, from MuseScore General (fetched
+  once, 40 MB, into the user's cache; without it the page uses a plain
+  synth sound)
 - the player code and the licence notices of what it includes
 
 Loose copies of the PDFs and `.mid` files (`Jingle Bells - Descant.pdf`
@@ -49,9 +51,11 @@ and so on) are written alongside only on request.
 
 ## The page
 
-- A menu: full score, then one button per part.
+- Tabs: full score, then one per part.
 - On a part: the other parts are drawn smaller; the part's own notes are
   full size.
+- Each view is engraved twice, on an A4-width page and on a 100 mm page
+  for phones; the page shows the one that fits the screen.
 - Tap any note to play from there. Notes light up as they sound, and the
   page scrolls a line at a time.
 - Tempo slider; volume, mute and solo for each part; click volume, on
@@ -59,16 +63,21 @@ and so on) are written alongside only on request.
   bars.
 - The click and count-in are made by the page, not baked into the MIDI.
 - Settings are remembered by each browser and can be put in the link
-  (`#part=descant&tempo=80`), so one setup can be shared.
+  (`#view=Descant&tempo=80`), so one setup can be shared.
 - The build date (and git commit, if the score is in git) shows at the
   bottom, so players can tell which version they have.
 
 ## Code
 
-- `rendernote/build.py`: runs LilyPond and assembles the HTML.
+- `rendernote/build.py`: runs LilyPond, reads the MIDI and assembles the
+  HTML.
 - `rendernote/rendernote.ily`: what Rendernote adds to every score (note
-  timing in the SVG, part extraction).
-- `rendernote/player.js`: playback and page controls, on Tone.js.
+  timing in the SVG, other parts smaller or left out, the phone page
+  size, MIDI with repeats played out).
+- `rendernote/soundfont.py`: reads an instrument's samples from a
+  SoundFont.
+- `rendernote/page.html`, `rendernote/player.js`: the page, and playback
+  and controls on the browser's own Web Audio, with no libraries.
 - `rendernote/cli.py`: the `rendernote` command.
 - `examples/jingle-bells.ly`: the demo.
 
@@ -81,8 +90,8 @@ treble recorder, in an arrangement written for this project.
 
 ## Licences
 
-Code: MIT. The Jingle Bells arrangement: CC0. MuseScore General: MIT.
-Tone.js: MIT.
+Code: MIT. The Jingle Bells arrangement: CC0. MuseScore General: MIT,
+with its contributors' notices carried in every page that uses it.
 
 ## Not in version 1
 

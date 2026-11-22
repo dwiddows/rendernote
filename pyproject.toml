@@ -1,0 +1,20 @@
+[project]
+name = "rendernote"
+version = "0.1.0"
+description = "Turn a LilyPond score into one playable HTML file: score, parts, mixer, click and loop."
+license = "MIT"
+requires-python = ">=3.9"
+dependencies = []
+
+[project.optional-dependencies]
+lilypond = ["lilypond"]
+
+[project.scripts]
+rendernote = "rendernote.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.package-data]
+rendernote = ["page.html", "player.js", "rendernote.ily"]

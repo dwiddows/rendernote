@@ -94,7 +94,3 @@ Part 2, for any two instruments; playback uses violin.
 Code: MIT. The Scarborough Fair arrangement: CC BY 4.0, credited in the
 score. MuseScore General: MIT,
 with its contributors' notices carried in every page that uses it.
-
-## Not in version 1
-
-MP3 or WAV output; recording, comping and video; a hosted service.

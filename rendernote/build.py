@@ -141,6 +141,11 @@ def title_of(score):
     return m.group(1) if m else os.path.splitext(os.path.basename(score))[0]
 
 
+def file_name(text):
+    """A title as a file name with no spaces: "Jingle Bells" -> "Jingle-Bells"."""
+    return re.sub(r"[^\w.]+", "-", text).strip("-")
+
+
 def version_line(score):
     stamp = datetime.datetime.now().strftime("%-d %b %Y, %H:%M")
     try:
@@ -160,19 +165,20 @@ def b64(path):
 def build(score, out=None, files=False):
     score = os.path.abspath(score)
     title = title_of(score)
-    out = out or os.path.join(os.path.dirname(score), title + ".html")
+    base = file_name(title)
+    out = out or os.path.join(os.path.dirname(score), base + ".html")
     with tempfile.TemporaryDirectory() as work:
         full = engrave(score, work, "score", backend="svg")
         svg = open(full + ".svg").read()
         parts = list(dict.fromkeys(re.findall(r'data-part="([^"]*)"', svg)))
         views = {("Score", "wide"): clean_svg(svg),
                  ("Score", "narrow"): clean_svg(open(engrave(score, work, "score-narrow", backend="svg", narrow=True) + ".svg").read())}
-        pdfs = {f"{title}.pdf": b64(engrave(score, work, "print") + ".pdf")}
+        pdfs = {f"{base}.pdf": b64(engrave(score, work, "print") + ".pdf")}
         for i, part in enumerate(parts):
             for layout in ("wide", "narrow"):
                 views[(part, layout)] = clean_svg(open(engrave(score, work, f"view{i}-{layout}", part, "shrink", "svg",
                                                                narrow=layout == "narrow") + ".svg").read())
-            pdfs[f"{title} - {part}.pdf"] = b64(engrave(score, work, f"part{i}", part, "remove") + ".pdf")
+            pdfs[f"{base}-{file_name(part)}.pdf"] = b64(engrave(score, work, f"part{i}", part, "remove") + ".pdf")
         midi_path = engrave(score, work, "midi", mode="midi") + ".midi"
         midi = read_midi(midi_path)
         # tracks come in staff order; name them after the parts
@@ -181,7 +187,7 @@ def build(score, out=None, files=False):
         sounds, sound_licence = samples([t["program"] for t in midi["tracks"]])
         data = {"title": title, "parts": [t["name"] for t in midi["tracks"]], "views": list(dict.fromkeys(v for v, _ in views)),
                 "midi": midi, "sounds": {str(k): v for k, v in sounds.items()},
-                "files": {name: data for name, data in pdfs.items()} | {f"{title}.mid": b64(midi_path)},
+                "files": {name: data for name, data in pdfs.items()} | {f"{base}.mid": b64(midi_path)},
                 "version": version_line(score), "build": datetime.datetime.now().isoformat(timespec="seconds")}
         if files:
             for name, content in data["files"].items():

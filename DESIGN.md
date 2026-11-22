@@ -13,7 +13,7 @@ pip install rendernote
 rendernote jingle-bells.ly
 ```
 
-This writes `Jingle Bells.html` next to the score. Open it, or send it to
+This writes `Jingle-Bells.html` next to the score. Open it, or send it to
 the other players. `rendernote serve jingle-bells.ly` serves it on your
 Wi-Fi (with a QR code for a tablet) and rebuilds it whenever the score is
 saved.
@@ -36,7 +36,7 @@ ship with LilyPond. MuseScore users export MusicXML first.
 
 ## What comes out
 
-`<Title>.html`, one self-contained file holding:
+`<Title>.html` (spaces in the title become hyphens), one self-contained file holding:
 
 - the full score and each part, engraved by LilyPond as SVG
 - the MIDI, one track per part
@@ -46,7 +46,7 @@ ship with LilyPond. MuseScore users export MusicXML first.
   synth sound)
 - the player code and the licence notices of what it includes
 
-Loose copies of the PDFs and `.mid` files (`Jingle Bells - Descant.pdf`
+Loose copies of the PDFs and `.mid` files (`Jingle-Bells-Descant.pdf`
 and so on) are written alongside only on request.
 
 ## The page

@@ -10,11 +10,11 @@ every case.
 
 ```
 pip install rendernote
-rendernote jingle-bells.ly
+rendernote scarborough-fair.ly
 ```
 
-This writes `Jingle-Bells.html` next to the score. Open it, or send it to
-the other players. `rendernote serve jingle-bells.ly` serves it on your
+This writes `Scarborough-Fair.html` next to the score. Open it, or send it to
+the other players. `rendernote serve scarborough-fair.ly` serves it on your
 Wi-Fi (with a QR code for a tablet) and rebuilds it whenever the score is
 saved.
 
@@ -46,7 +46,7 @@ ship with LilyPond. MuseScore users export MusicXML first.
   synth sound)
 - the player code and the licence notices of what it includes
 
-Loose copies of the PDFs and `.mid` files (`Jingle-Bells-Descant.pdf`
+Loose copies of the PDFs and `.mid` files (`Scarborough-Fair-Part-1.pdf`
 and so on) are written alongside only on request.
 
 ## The page
@@ -63,7 +63,7 @@ and so on) are written alongside only on request.
   bars.
 - The click and count-in are made by the page, not baked into the MIDI.
 - Settings are remembered by each browser and can be put in the link
-  (`#view=Descant&tempo=80`), so one setup can be shared.
+  (`#view=Part 1&tempo=80`), so one setup can be shared.
 - The build date (and git commit, if the score is in git) shows at the
   bottom, so players can tell which version they have.
 
@@ -79,18 +79,22 @@ and so on) are written alongside only on request.
 - `rendernote/page.html`, `rendernote/player.js`: the page, and playback
   and controls on the browser's own Web Audio, with no libraries.
 - `rendernote/cli.py`: the `rendernote` command.
-- `examples/jingle-bells.ly`: the demo.
+- `examples/scarborough-fair.ly`: the demo, and
+  `examples/scarborough-fair-easy-duet.mscz`, the MuseScore file it came
+  from.
 
 Errors from LilyPond are shown as LilyPond prints them.
 
 ## Demo
 
-Jingle Bells (James Lord Pierpont, 1857, public domain) for descant and
-treble recorder, in an arrangement written for this project.
+Scarborough Fair (traditional), an easy duet arranged by Dominic Widdows
+in 2022 and first published on MuseScore.com. The parts are Part 1 and
+Part 2, for any two instruments; playback uses violin.
 
 ## Licences
 
-Code: MIT. The Jingle Bells arrangement: CC0. MuseScore General: MIT,
+Code: MIT. The Scarborough Fair arrangement: CC BY 4.0, credited in the
+score. MuseScore General: MIT,
 with its contributors' notices carried in every page that uses it.
 
 ## Not in version 1

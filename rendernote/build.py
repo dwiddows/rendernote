@@ -142,7 +142,7 @@ def title_of(score):
 
 
 def file_name(text):
-    """A title as a file name with no spaces: "Jingle Bells" -> "Jingle-Bells"."""
+    """A title as a file name with no spaces: "Scarborough Fair" -> "Scarborough-Fair"."""
     return re.sub(r"[^\w.]+", "-", text).strip("-")
 
 

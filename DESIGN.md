@@ -1,4 +1,4 @@
-<img src="images/logo.svg" alt="RenderNote" width="240">
+<img src="images/logo.svg" alt="RenderNote" width="200">
 
 # RenderNote design
 

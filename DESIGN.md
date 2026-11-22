@@ -1,10 +1,8 @@
 # Rendernote design
 
-Rendernote turns a LilyPond score into one HTML file you can open in any
-browser: the score and each part, playable by tapping a note, with a
-mixer, tempo, click and loop. It is a small project meant to be forked
-and extended, so the code favours being short and obvious over handling
-every case.
+Rendernote takes a music score and prepares each part for playing along
+live, with the audio of the whole piece to follow. A LilyPond score goes
+in, and one HTML file comes out that opens in any browser.
 
 ## Happy path
 

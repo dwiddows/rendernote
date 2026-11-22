@@ -90,4 +90,4 @@ The page is also a backing track for recording yourself, one part at a time.
 6. Give the recordings and the score to an agent such as Claude Code, and ask it to pick the best of each take and mix them into one video.
    It can check every take for split notes and line the parts up bar by bar.
 
-The Moon River trombone quartet video was made this way.
+The [Moon River trombone quartet video](https://youtu.be/LXzhrkVmQxY) was made this way.

@@ -1,4 +1,4 @@
-<img src="images/rendernote_logo.svg" alt="RenderNote" width="200">
+<img src="https://dwiddows.github.io/rendernote/images/rendernote_logo.svg" alt="RenderNote" width="200">
 
 RenderNote takes a music score and prepares each part for playing along live, with the audio of the whole piece to follow.
 A LilyPond score goes in, and one HTML file comes out that opens in any browser.
@@ -21,5 +21,5 @@ created from this [Scarborough Fair Easy Duet](http://musescore.com/user/6157466
 The parts and backing track for [Moon River trombone quartet video](https://youtu.be/I_E8MWM5BTQ) were made using RenderNote.
 It should easily scale to many more parts. The parts can be shared and recorded anywhere, and then gathered and mixed later.
 
-[DESIGN.md](DESIGN.md) describes how it works and how to record with it.
+[DESIGN.md](https://github.com/dwiddows/rendernote/blob/main/DESIGN.md) describes how it works and how to record with it.
 MIT licence.

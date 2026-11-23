@@ -15,6 +15,7 @@ rendernote examples/scarborough-fair.ly
 
 This writes `examples/Scarborough-Fair.html`.
 Open it, choose a part, and tap any note to play from there.
+You can also [try it online](https://dwiddows.github.io/rendernote/examples/Scarborough-Fair.html).
 
 The [Moon River trombone quartet video](https://youtu.be/I_E8MWM5BTQ) was recorded one part at a time, playing along with these pages.
 

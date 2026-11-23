@@ -39,7 +39,7 @@ def engrave(score, work, name, focus=None, mode="none", backend=None, narrow=Fal
         f.write("#(define-public rendernote-narrow %s)\n" % ("#t" if narrow else "#f"))
         f.write('\\include "%s"\n' % os.path.join(HERE, "rendernote.ily"))
         f.write('\\include "%s"\n' % os.path.abspath(score))
-    cmd = [lilypond(), "-s", "-I", os.path.dirname(os.path.abspath(score)), "-o", os.path.join(work, name)]
+    cmd = [lilypond(), "-s", "-dno-point-and-click", "-I", os.path.dirname(os.path.abspath(score)), "-o", os.path.join(work, name)]
     if backend: cmd.insert(1, "-dbackend=" + backend)
     r = subprocess.run(cmd + [wrapper], capture_output=True, text=True)
     if r.returncode:

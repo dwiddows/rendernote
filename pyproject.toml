@@ -7,6 +7,10 @@ license = "MIT"
 requires-python = ">=3.9"
 dependencies = []
 
+[project.urls]
+Homepage = "https://github.com/dwiddows/rendernote"
+Demo = "https://dwiddows.github.io/rendernote/examples/Scarborough-Fair.html"
+
 [project.optional-dependencies]
 lilypond = ["lilypond"]
 

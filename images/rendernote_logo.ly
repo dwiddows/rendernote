@@ -2,8 +2,8 @@
 
 % The RenderNote logo: RENDER and NOTE written down the spaces of the
 % staff, then two notes, the second lit red as if sounding.
-% Engrave with:  lilypond -dbackend=svg -dcrop logo.ly
-% then save logo.cropped.svg as logo.svg with a white background, so the
+% Engrave with:  lilypond -dbackend=svg -dcrop rendernote_logo.ly
+% then save rendernote_logo.cropped.svg as rendernote_logo.svg with a white background, so the
 % logo shows on dark pages too.
 \paper { indent = 0 ragged-right = ##t tagline = ##f oddHeaderMarkup = ##f oddFooterMarkup = ##f }
 

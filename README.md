@@ -1,4 +1,4 @@
-<img src="images/logo.svg" alt="RenderNote" width="200">
+<img src="images/rendernote_logo.svg" alt="RenderNote" width="200">
 
 RenderNote takes a music score and prepares each part for playing along live, with the audio of the whole piece to follow.
 A LilyPond score goes in, and one HTML file comes out that opens in any browser.

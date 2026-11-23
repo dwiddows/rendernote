@@ -13,7 +13,9 @@ from .soundfont import SoundFont
 HERE = os.path.dirname(os.path.abspath(__file__))
 SOUNDFONT_URL = "https://ftp.osuosl.org/pub/musescore/soundfont/MuseScore_General/"
 SOUNDFONT = "MuseScore_General.sf3"
-SOUNDFONT_LICENSE = "MuseScore_General_License.md"
+SOUND_NOTICE = ("Sounds: MuseScore General, from " + SOUNDFONT_URL + "\nFluidR3 \u00a9 2000\u201302 Frank Wen. FluidR3Mono \u00a9 2014\u201317 Michael Cowgill.\n"
+                "MuseScore General \u00a9 2018\u201319 S. Christian Collins. Temple Blocks \u00a9 2002 Ethan Winer.\n"
+                "Drumline Cymbals \u00a9 2016 Michael Schorsch.")
 
 
 # ---------------------------------------------------------------- LilyPond
@@ -111,9 +113,8 @@ def soundfont():
         os.makedirs(d, exist_ok=True)
         print(f"Fetching the MuseScore General sounds (40 MB, once) into {d}", flush=True)
         try:
-            for name in (SOUNDFONT_LICENSE, SOUNDFONT):
-                urllib.request.urlretrieve(SOUNDFONT_URL + name, os.path.join(d, name) + ".part")
-                os.replace(os.path.join(d, name) + ".part", os.path.join(d, name))
+            urllib.request.urlretrieve(SOUNDFONT_URL + SOUNDFONT, path + ".part")
+            os.replace(path + ".part", path)
         except OSError as e:
             print(f"Couldn't fetch the sounds ({e}); the page will use a plain synth sound.")
             return None
@@ -123,15 +124,14 @@ def soundfont():
 def samples(programs):
     """{program: [zone...]} with each zone's audio as base64, for the page's sampler."""
     path = soundfont()
-    if not path: return {}, ""
+    if not path: return {}
     sf, out = SoundFont(path), {}
     for prog in sorted(set(programs)):
         zones = sf.program(prog)
         out[prog] = [{"lo": z["lo"], "hi": z["hi"], "root": z["root"], "tune": z["tune"], "rate": z["rate"],
                       "loop": z["loop"], "format": "ogg" if sf.compressed else "pcm16",
                       "audio": base64.b64encode(z["audio"]).decode()} for z in zones]
-    lic = os.path.join(cache_dir(), SOUNDFONT_LICENSE)
-    return out, open(lic).read() if os.path.exists(lic) else ""
+    return out
 
 
 # ---------------------------------------------------------------- the page
@@ -156,6 +156,16 @@ def version_line(score):
     except OSError:
         commit = dirty = ""
     return f"Built {stamp}" + (f" from commit {commit}" + (" with changes" if dirty else "") if commit else "")
+
+
+def licence():
+    """RenderNote's LICENSE: beside the code in a checkout, or in pip's record of an installed copy."""
+    path = os.path.join(HERE, "..", "LICENSE")
+    if os.path.exists(path):
+        return open(path).read()
+    from importlib.metadata import distribution
+    dist = distribution("rendernote")
+    return next(f.read_text() for f in dist.files if f.name == "LICENSE")
 
 
 def b64(path):
@@ -184,7 +194,7 @@ def build(score, out=None, files=False):
         # tracks come in staff order; name them after the parts
         for i, t in enumerate(midi["tracks"]):
             t["name"] = parts[i] if i < len(parts) else t["name"] or f"Part {i + 1}"
-        sounds, sound_licence = samples([t["program"] for t in midi["tracks"]])
+        sounds = samples([t["program"] for t in midi["tracks"]])
         data = {"title": title, "parts": [t["name"] for t in midi["tracks"]], "views": list(dict.fromkeys(v for v, _ in views)),
                 "midi": midi, "sounds": {str(k): v for k, v in sounds.items()},
                 "files": {name: data for name, data in pdfs.items()} | {f"{base}.mid": b64(midi_path)},
@@ -195,11 +205,13 @@ def build(score, out=None, files=False):
     page = open(os.path.join(HERE, "page.html")).read()
     svgs = "\n".join(f'<div class="view" data-view="{html.escape(name)}" data-layout="{layout}" hidden>{s}</div>'
                      for (name, layout), s in views.items())
-    licences = sound_licence + "\n\n" if sounds else ""
+    # who made what, then the MIT licence that RenderNote and MuseScore General share
+    mit = licence().split("\n\n", 2)[2]
+    licences = "\n".join(["Code: RenderNote \u00a9 2026 Dominic Widdows."] + ([SOUND_NOTICE] if sounds else [])
+                         + ["", "Shared under the MIT licence:", "", mit])
     page = (page.replace("{{TITLE}}", html.escape(title))
                 .replace("{{VIEWS}}", svgs)
-                .replace("{{LICENCES}}", html.escape(licences + open(os.path.join(HERE, "..", "LICENSE")).read()
-                                                      if os.path.exists(os.path.join(HERE, "..", "LICENSE")) else licences))
+                .replace("{{LICENCES}}", html.escape(licences))
                 .replace("{{PLAYER}}", open(os.path.join(HERE, "player.js")).read())
                 .replace("{{DATA}}", json.dumps(data, separators=(",", ":")).replace("</", "<\\/")))
     open(out, "w").write(page)

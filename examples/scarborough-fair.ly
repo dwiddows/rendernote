@@ -11,11 +11,7 @@
   subtitle = "Easy duet"
   composer = "Traditional"
   arranger = "arr. Dominic Widdows"
-  copyright = \markup \center-column {
-    "Arrangement © 2022 Dominic Widdows, CC BY 4.0."
-    "First published on MuseScore.com as"
-    \with-url "https://musescore.com/user/6157466/scores/8300549" \underline "Scarborough Fair Easy Duet"
-  }
+  copyright = "Arrangement © 2022 Dominic Widdows, CC BY 4.0"
   tagline = ##f
 }
 

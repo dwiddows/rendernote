@@ -15,7 +15,8 @@ rendernote examples/scarborough-fair.ly
 
 This writes `examples/Scarborough-Fair.html`.
 Open it, choose a part, and tap any note to play from there.
-There's a simple 2-part demo example at [Scarborough Fair duet](https://dwiddows.github.io/rendernote/examples/Scarborough-Fair.html).
+There's a simple 2-part demo example of [Scarborough Fair](https://dwiddows.github.io/rendernote/examples/Scarborough-Fair.html),
+created from this [Scarborough Fair Easy Duet](http://musescore.com/user/6157466/scores/8300549) on MuseScore.
 
 The parts and backing track for [Moon River trombone quartet video](https://youtu.be/I_E8MWM5BTQ) were made using RenderNote.
 It should easily scale to many more parts. The parts can be shared and recorded anywhere, and then gathered and mixed later.

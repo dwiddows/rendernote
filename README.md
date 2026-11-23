@@ -7,14 +7,19 @@ You need [LilyPond](https://lilypond.org/download.html) (on a Mac, `brew install
 Then:
 
 ```
-git clone https://github.com/dwiddows/rendernote
-cd rendernote
-pip install .
-rendernote examples/scarborough-fair.ly
+pip install rendernote
+rendernote your-score.ly
 ```
 
-This writes `examples/Scarborough-Fair.html`.
+This writes an HTML file named after the score's title, next to the score.
 Open it, choose a part, and tap any note to play from there.
+
+To try it on the example score:
+
+```
+git clone https://github.com/dwiddows/rendernote
+rendernote rendernote/examples/scarborough-fair.ly
+```
 There's a simple 2-part demo example of [Scarborough Fair](https://dwiddows.github.io/rendernote/examples/Scarborough-Fair.html),
 created from this [Scarborough Fair Easy Duet](http://musescore.com/user/6157466/scores/8300549) on MuseScore.
 

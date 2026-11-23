@@ -1,6 +1,6 @@
 [project]
 name = "rendernote"
-version = "0.1.0"
+version = "0.1.1"
 description = "Prepare each part of a LilyPond score for live play-along, with the audio of the whole piece to follow."
 readme = "README.md"
 license = "MIT"

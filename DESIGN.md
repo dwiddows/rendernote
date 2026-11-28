@@ -50,9 +50,10 @@ Loose copies of the PDFs and `.mid` files (`Scarborough-Fair-Part-1.pdf` and so 
 - Each view is engraved twice, on an A4-width page and on a 100 mm page for phones; the page shows the one that fits the screen.
 - Tap any note to play from there.
   Notes light up as they sound, and the page scrolls a line at a time.
-- Tempo slider; volume, mute and solo for each part; click volume, on every beat or only the downbeat, and count-in length; loop between two bars.
+- Tempo slider; volume for each part, and mute and solo when there is more than one; click volume, on every beat or only the downbeat, and count-in length; loop between two bars.
 - The page makes the click and count-in itself, so they follow the tempo and settings.
-- Settings are remembered by each browser and can be put in the link (`#view=Part 1&tempo=80`), so one setup can be shared.
+- Swing, a playback setting: the second eighth of each beat comes late, as in triplets, while the score stays written in straight eighths.
+- Settings are remembered by each browser and can be put in the link (`#view=Part 1&tempo=80&swing=on`), so one setup can be shared.
 - The build date (and git commit, if the score is in git) shows at the bottom, so players can tell which version they have.
 
 ## Code

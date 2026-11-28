@@ -16,11 +16,11 @@ const $ = id => document.getElementById(id);
 // ------------------------------------------------------------ settings
 // Defaults, then this browser's last settings, then anything in the link.
 const KEY = "rendernote:" + D.title;
-const S = { view: "Score", tempo: 100, click: "off", clickVol: 70, countIn: 1, loop: false,
+const S = { view: "Score", tempo: 100, swing: "off", click: "off", clickVol: 70, countIn: 1, loop: false,
             loopFrom: 1, loopTo: Math.max(1, Math.ceil(lastBeat / BAR)),
             vol: {}, mute: {}, solo: {} };
 try { Object.assign(S, JSON.parse(localStorage.getItem(KEY) || "{}")); } catch (e) {}
-const LINK = { view: "view", tempo: "tempo", click: "click", clickVol: "clickvol", countIn: "countin" };
+const LINK = { view: "view", tempo: "tempo", swing: "swing", click: "click", clickVol: "clickvol", countIn: "countin" };
 for (const [k, v] of new URLSearchParams(location.hash.slice(1))) {
   const name = Object.keys(LINK).find(n => LINK[n] === k);
   if (name) S[name] = typeof S[name] === "number" ? Number(v) : v;
@@ -63,6 +63,19 @@ function beatAt(seconds) {
     s += span;
   }
   return lastBeat;
+}
+
+// Swing: with it on, the second eighth of each beat comes a third of the way
+// late (two-thirds into the beat, as in triplets). It moves playback only.
+function swing(b) {
+  if (S.swing !== "on") return b;
+  const q = Math.floor(b + 1e-9), f = b - q;
+  return q + (f < 0.5 ? f * 4 / 3 : 2 / 3 + (f - 0.5) * 2 / 3);
+}
+function unswing(b) {
+  if (S.swing !== "on") return b;
+  const q = Math.floor(b + 1e-9), f = b - q;
+  return q + (f < 2 / 3 ? f * 3 / 4 : 0.5 + (f - 2 / 3) * 3 / 2);
 }
 
 // ------------------------------------------------------------ sound
@@ -168,7 +181,7 @@ function schedule(from, to, t0, countIn) {
   }
   tracks.forEach((t, i) => {
     for (const [s, e, key, vel] of t.notes) {
-      if (s >= from - 1e-6 && s < to - 1e-6) voice(i, key, vel, at(s), at(Math.min(e, to + 0.5)));
+      if (s >= from - 1e-6 && s < to - 1e-6) voice(i, key, vel, at(swing(s)), at(swing(Math.min(e, to + 0.5))));
     }
   });
 }
@@ -234,7 +247,7 @@ function frame() {
   if (!play || !ctx) return;
   const now = ctx.currentTime;
   if (now < play.t0) { $("where").textContent = "Count-in"; return; }
-  const beat = beatAt(secondsAt(play.from) + now - play.t0);
+  const beat = unswing(beatAt(secondsAt(play.from) + now - play.t0));
   $("where").textContent = `Bar ${Math.floor(beat / BAR) + 1}`;
   let first = null;
   for (const n of current().notes) {
@@ -275,6 +288,8 @@ function setup() {
   $("tempo-out").textContent = `${S.tempo}% (♩ = ${bpm()})`;
   $("tempo").oninput = e => { S.tempo = +e.target.value; $("tempo-out").textContent = `${S.tempo}% (♩ = ${bpm()})`; save(); };
   $("tempo").onchange = restart;
+  $("swing").checked = S.swing === "on";
+  $("swing").onchange = e => { S.swing = e.target.checked ? "on" : "off"; save(); restart(); };
 
   for (const t of tracks) {
     const name = document.createElement("span"); name.textContent = t.name;
@@ -288,7 +303,8 @@ function setup() {
       b.onclick = () => { S[key][t.name] = !S[key][t.name]; b.setAttribute("aria-pressed", S[key][t.name]); mix(); save(); };
       return b;
     };
-    $("mixer").append(name, vol, toggle("M", "mute"), toggle("S", "solo"));
+    $("mixer").append(name, vol);
+    if (tracks.length > 1) $("mixer").append(toggle("M", "mute"), toggle("S", "solo"));   // mute and solo only mean something with other parts
   }
 
   $("click").value = S.click;

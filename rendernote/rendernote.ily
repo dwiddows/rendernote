@@ -17,12 +17,20 @@
                (if (string? name) name (markup->string name))
                (loop (ly:context-parent ctx)))))))
 
+%% The parts in score order (the order their staves are created), so the page
+%% can list the parts, and name the MIDI tracks, in the same order as the score.
+#(define rn-parts '())
+#(define (rn-part-order name)
+   (or (list-index (lambda (n) (equal? n name)) rn-parts)
+       (begin (set! rn-parts (append rn-parts (list name))) (1- (length rn-parts)))))
+
 %% Every note head in the SVG carries its part, when it starts and ends (in
 %% quarter notes from the start of the piece), and its pitch, so the page can
 %% play from any note and light up the notes that are sounding.
 rnNoteTiming =
 #(lambda (context)
    (make-engraver
+    ((initialize engraver) (rn-part-order (rn-part-name context)))
     (acknowledgers
      ((note-head-interface engraver grob source-engraver)
       (let* ((event (ly:grob-property grob 'cause))
@@ -32,6 +40,7 @@ rnNoteTiming =
         (ly:grob-set-property! grob 'output-attributes
           (list (cons 'class "rn-note")
                 (cons 'data-part (rn-part-name context))
+                (cons 'data-order (number->string (rn-part-order (rn-part-name context))))
                 (cons 'data-start (number->string (exact->inexact (* 4 start))))
                 (cons 'data-end (number->string (exact->inexact (* 4 (+ start len)))))
                 (cons 'data-pitch (number->string (+ 60 (ly:pitch-semitones pitch)))))))))))

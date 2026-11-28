@@ -180,7 +180,9 @@ def build(score, out=None, files=False):
     with tempfile.TemporaryDirectory() as work:
         full = engrave(score, work, "score", backend="svg")
         svg = open(full + ".svg").read()
-        parts = list(dict.fromkeys(re.findall(r'data-part="([^"]*)"', svg)))
+        # parts in score order, which is also the order of the MIDI tracks
+        order = dict(re.findall(r'data-part="([^"]*)" data-order="(\d+)"', svg))
+        parts = sorted(order, key=lambda p: int(order[p]))
         views = {("Score", "wide"): clean_svg(svg),
                  ("Score", "narrow"): clean_svg(open(engrave(score, work, "score-narrow", backend="svg", narrow=True) + ".svg").read())}
         pdfs = {f"{base}.pdf": b64(engrave(score, work, "print") + ".pdf")}
